@@ -4,11 +4,14 @@ eventsApp.controller('EventController', function EventController($scope, eventDa
     $scope.sortOrder = 'name';
 
     eventData.getEvent()
-        .success(function(event) { $scope.event = event; })
-        .error(function(data, status, headers, config) {
-            $log.warn(data, status, headers(), config);
-    });
+        .$promise
+        .then(function (event) { $scope.event = event; })
+        .catch(function (response) { console.log(response); }
+    );
 
+    $scope.scrollToSession = function () {
+        $anchorScroll();
+    };
 
     $scope.upVoteSession  = function(session) {
         session.upVoteCount++;
